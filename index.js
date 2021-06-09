@@ -10,6 +10,7 @@ app.set("port", process.env.PORT || 3000);
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors())
 
 
 const requestLogger = require('./middleware/request_logger');
