@@ -10,6 +10,7 @@ app.set("port", process.env.PORT || 3000);
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors())
 
 
 const requestLogger = require('./middleware/request_logger');
@@ -18,7 +19,8 @@ app.use(requestLogger);
 const userControllers = require('./controllers/userControllers')
 app.use('/api/users', userControllers)
 
-
+const cardControllers = require('./controllers/cardControllers')
+app.use('/api/cards', cardControllers)
 
 app.listen(app.get('port'), () => {
 	console.log(`✅ Listening on port ${app.get('port')}`);
