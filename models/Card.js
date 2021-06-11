@@ -2,8 +2,11 @@ const mongoose = require('../db/connection')
 
 const cardSchema = new mongoose.Schema(
     {
-      tags: {
+      url: {
         type: String,
+      },
+      tags: {
+        type: [String],
       },
       comments: {
         type: String,
@@ -11,7 +14,7 @@ const cardSchema = new mongoose.Schema(
       author: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true
+        // required: true
       }
     },
 )
