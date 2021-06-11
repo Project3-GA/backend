@@ -18,12 +18,13 @@ router.get('/:id', requireToken, (req, res, next) => {
 })
 
 router.post('/', requireToken, (req, res, next) => {
+	req.body.author = req.user._id
 	Card.create(req.body)
 		.then((card) => res.json(card))
 		.catch(next);
 });
 
-router.delete('/:id', requireToken, (req,res,next) =>{
+router.delete('/:id', requireToken, (req, res, next) => {
 	const id = req.params.id
 	Card.findByIdAndDelete(id)
 		.then(() => res.status(204))
