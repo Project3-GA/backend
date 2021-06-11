@@ -10,6 +10,13 @@ router.get('/', requireToken, (req, res, next) => {
 		.catch(next);
 });
 
+router.get('/:id', requireToken, (req, res, next) => {
+	const id = req.params.id
+	Card.findById(id)
+		.then((cards) => res.json(cards))
+		.catch(next)
+})
+
 router.post('/', requireToken, (req, res, next) => {
 	Card.create(req.body)
 		.then((card) => res.json(card))
