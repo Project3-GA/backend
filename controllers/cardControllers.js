@@ -26,8 +26,11 @@ router.post('/', requireToken, (req, res, next) => {
 
 router.delete('/:id', requireToken, (req, res, next) => {
 	const id = req.params.id
-	Card.findByIdAndDelete(id)
-		.then(() => res.status(204))
+	Card.findOneAndDelete({ _id: id, author: req.user._id })
+		.then((card) => {
+			console.log(card)
+			res.status(204)
+		})
 		.catch(next);
 })
 
@@ -38,12 +41,10 @@ router.delete('/:id', requireToken, (req, res, next) => {
 // 		.then(())
 // })
 
-router.patch('/:id', (req, res, next) => {
-	// Grab the id
+router.patch('/:id', requireToken, (req, res, next) => {
 	const id = req.params.id;
-	// Grab the data
 	const updated = req.body;
-	Card.findOneAndUpdate({ _id: id }, req.body, { new: true })
+	Card.findOneAndUpdate({ _id: id, author: req.user._id }, req.body, { new: true })
 		.then((card) => res.json(card))
 		.catch(next);
 });

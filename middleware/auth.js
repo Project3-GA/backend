@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 
-const secret = process.env.JWT_SECRET
+const secret = process.env.JWT_SECRET || 'some secret key here'
 
 
 const { Strategy, ExtractJwt } = require('passport-jwt');
