@@ -16,12 +16,23 @@ router.post('/signup', async (req, res, next) => {
     }
 })
 
+// testing how to send user id to browser
+// router.post('/signin', (req, res, next) => {
+//     User.findOne({ email: req.body.email })
+//     const id = user._id
+//         .then((user) => createUserToken(req, user))
+//         .then((token) => res.json({$or:[{ token }, {id} ]} ))
+//         .catch(next);
+// });
+
+// safety backup
 router.post('/signin', (req, res, next) => {
     User.findOne({ email: req.body.email })
         .then((user) => createUserToken(req, user))
         .then((token) => res.json({ token }))
         .catch(next);
 });
+
 
 router.get('/', (req, res, next) => {
     User.find()
