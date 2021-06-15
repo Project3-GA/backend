@@ -53,4 +53,12 @@ router.delete('/:id', requireToken, (req, res, next) => {
 		.catch(next);
 });
 
+router.get('/personal/:id', requireToken, (req, res, next) => {
+	const id = req.params.id;
+	console.log(id);
+	Card.find({ author: id })
+		.then((cards) => res.json(cards))
+		.catch(next);
+});
+
 module.exports = router;
