@@ -1,3 +1,5 @@
+
+//Logging requests in terminal to help with debugging
 const requestLogger = function (req, res, next) {
     console.log('\n===== Incoming Request =====\n');
     console.log(`${new Date()}`);

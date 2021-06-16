@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
+//Selecting the secret  to use for hashing passwords 
 const secret = process.env.JWT_SECRET || 'some secret key here';
 
 const { Strategy, ExtractJwt } = require('passport-jwt');
@@ -23,6 +24,7 @@ passport.initialize();
 
 const requireToken = passport.authenticate('jwt', { session: false });
 
+//Function to create user token based on user email and and password matching to user in the database.  Then passing that user id to the token to be sent to frontend and used to authenticate the user. 
 const createUserToken = (req, user) => {
 	if (
 		!user ||

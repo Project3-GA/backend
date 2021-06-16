@@ -3,12 +3,15 @@ const router = express.Router();
 const Card = require('../models/Card');
 const { requireToken } = require('../middleware/auth');
 
+
+//Get all the cards in database and send them to the gallery on the frontend 
 router.get('/', requireToken, (req, res, next) => {
 	Card.find()
 		.then((cards) => res.json(cards))
 		.catch(next);
 });
 
+//Get a specific card and send to the CardDetails on the frontend 
 router.get('/:id', requireToken, (req, res, next) => {
 	const id = req.params.id;
 	Card.findById(id)
@@ -16,6 +19,7 @@ router.get('/:id', requireToken, (req, res, next) => {
 		.catch(next);
 });
 
+//Creating a card in the database
 router.post('/', requireToken, (req, res, next) => {
 	req.body.author = req.user._id;
 	Card.create(req.body)
@@ -23,6 +27,7 @@ router.post('/', requireToken, (req, res, next) => {
 		.catch(next);
 });
 
+//Adding a tag to an already existing card in the database
 router.patch('/:id', requireToken, (req, res, next) => {
 	const id = req.params.id;
 	const updated = req.body;
@@ -33,6 +38,7 @@ router.patch('/:id', requireToken, (req, res, next) => {
 		.catch(next);
 });
 
+//Removes tag from the tags array on a card 
 router.patch('/tags/:id', requireToken, (req, res, next) => {
 	const id = req.params.id;
 	const tagName = req.body.tags;
@@ -43,6 +49,8 @@ router.patch('/tags/:id', requireToken, (req, res, next) => {
 		{ new: true }
 	).catch(next);
 });
+
+//Deleting a card from the database
 router.delete('/:id', requireToken, (req, res, next) => {
 	const id = req.params.id;
 	Card.findOneAndDelete({ _id: id, author: req.user._id })
@@ -52,6 +60,7 @@ router.delete('/:id', requireToken, (req, res, next) => {
 		.catch(next);
 });
 
+//Gets all cards created by the authenticated user and sends to the front end
 router.get('/personal/:id', requireToken, (req, res, next) => {
 	const id = req.params.id;
 

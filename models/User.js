@@ -1,5 +1,6 @@
 const mongoose = require('../db/connection');
 
+// Data template for Users removing the email from view in the database.  Also removing the password from being passed in requests.  
 const userSchema = new mongoose.Schema(
 	{
 		email: {

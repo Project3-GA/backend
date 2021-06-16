@@ -4,6 +4,7 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const { createUserToken } = require('../middleware/auth');
 
+//Creates a user in the database with a hashed password
 router.post('/signup', async (req, res, next) => {
 	try {
 		const password = await bcrypt.hash(req.body.password, 10);
@@ -15,6 +16,7 @@ router.post('/signup', async (req, res, next) => {
 	}
 });
 
+//Creates user token upon login and sends to front end to authenticate the user 
 router.post('/signin', (req, res, next) => {
 	User.findOne({ email: req.body.email })
 		.then((user) => createUserToken(req, user))
@@ -22,10 +24,5 @@ router.post('/signin', (req, res, next) => {
 		.catch(next);
 });
 
-router.get('/', (req, res, next) => {
-	User.find()
-		.then((users) => res.json(users))
-		.catch(next);
-});
 
 module.exports = router;
