@@ -1,5 +1,6 @@
 const mongoose = require('../db/connection')
 
+//Data structure for Cards referencing the User as the author
 const cardSchema = new mongoose.Schema(
   {
     url: {
