@@ -27,16 +27,17 @@ router.post('/', requireToken, (req, res, next) => {
 });
 
 //Adding a tag to an already existing card in the database
-router.patch('/:id', requireToken, (req, res, next) => {
-	const id = req.params.id;
-	const updated = req.body;
-	Card.findOneAndUpdate({ _id: id, author: req.user._id }, req.body, {
-		new: true,
-	})
-		.then((card) => res.json(card))
-		.catch(next);
-});
+// router.patch('/:id', requireToken, (req, res, next) => {
+// 	const id = req.params.id;
+// 	const updated = req.body;
+// 	Card.findOneAndUpdate({ _id: id, author: req.user._id }, req.body, {
+// 		new: true,
+// 	})
+// 		.then((card) => res.json(card))
+// 		.catch(next);
+// });
 router.patch('/:id', requireToken, async (req, res, next) => {
+	console.log(req.params.id);
 	try {
 		let card = await Card.findOne({ _id: req.params.id, author: req.user._id });
 
@@ -57,7 +58,9 @@ router.patch('/tags/:id', requireToken, (req, res, next) => {
 		{ _id: id, author: req.user._id },
 		{ $pull: { tags: tagName } },
 		{ new: true }
-	).catch(next);
+	)
+		.then((card) => res.json(card))
+		.catch(next);
 });
 
 //Deleting a card from the database
