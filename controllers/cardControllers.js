@@ -47,9 +47,16 @@ router.delete('/:id', requireToken, (req, res, next) => {
 	const id = req.params.id;
 	Card.findOneAndDelete({ _id: id, author: req.user._id })
 		.then((card) => {
-			console.log(card);
 			res.status(204);
 		})
+		.catch(next);
+});
+
+router.get('/personal/:id', requireToken, (req, res, next) => {
+	const id = req.params.id;
+
+	Card.find({ author: id })
+		.then((cards) => res.json(cards))
 		.catch(next);
 });
 
