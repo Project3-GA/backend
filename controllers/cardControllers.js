@@ -4,14 +4,14 @@ const Card = require('../models/Card');
 const { requireToken } = require('../middleware/auth');
 
 //Get all the cards in database and send them to the gallery on the frontend
-router.get('/', requireToken, (req, res, next) => {
+router.get('/', (req, res, next) => {
 	Card.find()
 		.then((cards) => res.json(cards))
 		.catch(next);
 });
 
 //Get a specific card and send to the CardDetails on the frontend
-router.get('/:id', requireToken, (req, res, next) => {
+router.get('/:id', (req, res, next) => {
 	const id = req.params.id;
 	Card.findById(id)
 		.then((cards) => res.json(cards))
@@ -37,7 +37,7 @@ router.post('/', requireToken, (req, res, next) => {
 // 		.catch(next);
 // });
 router.patch('/:id', requireToken, async (req, res, next) => {
-	console.log(req.params.id);
+	console.log(req.user);
 	try {
 		let card = await Card.findOne({ _id: req.params.id, author: req.user._id });
 
@@ -74,9 +74,8 @@ router.delete('/:id', requireToken, (req, res, next) => {
 });
 
 //Gets all cards created by the authenticated user and sends to the front end
-router.get('/personal/:id', requireToken, (req, res, next) => {
+router.get('/personal/:id', (req, res, next) => {
 	const id = req.params.id;
-
 	Card.find({ author: id })
 		.then((cards) => res.json(cards))
 		.catch(next);
