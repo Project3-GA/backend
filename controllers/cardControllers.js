@@ -75,6 +75,7 @@ router.delete('/:id', requireToken, (req, res, next) => {
 
 //Gets all cards created by the authenticated user and sends to the front end
 router.get('/personal/:id', (req, res, next) => {
+	console.log(req.user);
 	const id = req.params.id;
 	Card.find({ author: id })
 		.then((cards) => res.json(cards))
